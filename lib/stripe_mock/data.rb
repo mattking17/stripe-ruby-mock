@@ -124,10 +124,10 @@ module StripeMock
         :current_period_start => 1308595038,
         :cancel_at_period_end => false,
         :canceled_at => nil,
-        :start => 1308595038,
+        :start => Time.now.utc,
         :object => "subscription",
-        :trial_start => 1308595038,
-        :trial_end => 1308681468,
+        :trial_start => Time.now.utc,
+        :trial_end => (Time.now.utc + 60.days).to_i,
         :customer => "c_test_customer",
         :quantity => 1
       }, params)
@@ -166,6 +166,7 @@ module StripeMock
         :starting_balance => 0,
         :subtotal => 1000,
         :total => 1000,
+        :amount_due => 1000,
         :charge => nil,
         :discount => nil,
         :ending_balance => nil,
@@ -312,6 +313,32 @@ module StripeMock
         :id => "di_test_coupon"
       }
     end
+
+		def self.mock_discount(params={})
+			{
+				:start => 1373580998,
+				:object => "discount",
+				:customer => "cus_2Hx8OCjV3CINiS",
+				:end => nil,
+				:coupon => mock_coupon(params[:coupon] ? {:id => params[:coupon]} : {})
+			}
+		end
+
+		def self.mock_coupon(params={})
+      {
+				:id => "cpn_001",
+				:percent_off => nil,
+				:amount_off => nil,
+				:currency => "usd",
+				:object => "coupon",
+				:livemode => false,
+				:duration => "forever",
+				:redeem_by => nil,
+				:max_redemptions => nil,
+				:times_redeemed => 0,
+				:duration_in_months => nil
+      }.merge(params)
+		end
 
   end
 end

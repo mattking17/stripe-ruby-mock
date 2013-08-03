@@ -17,17 +17,19 @@ module StripeMock
 
     include StripeMock::RequestHandlers::Charges
     include StripeMock::RequestHandlers::Customers
+    include StripeMock::RequestHandlers::Invoices
     include StripeMock::RequestHandlers::InvoiceItems
     include StripeMock::RequestHandlers::Plans
+    include StripeMock::RequestHandlers::Coupons
 
-
-    attr_reader :charges, :customers, :plans, :error_queue
+    attr_reader :charges, :customers, :plans, :error_queue, :coupons
     attr_accessor :debug, :strict
 
     def initialize
       @customers = {}
       @charges = {}
       @plans = {}
+      @coupons = {}
       @card_tokens = {}
 
       @id_counter = 0
@@ -54,6 +56,7 @@ module StripeMock
           @error_queue.dequeue
           raise mock_error
         else
+					params[:_captures] = method_url.match(handler[:route]).to_a.slice(1, 100)
           res = self.send(handler[:name], handler[:route], method_url, params, headers)
           puts "[StripeMock res] #{res}" if @debug == true
           [res, api_key]

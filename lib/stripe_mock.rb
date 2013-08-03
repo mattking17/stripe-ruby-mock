@@ -30,8 +30,10 @@ require 'stripe_mock/api/debug'
 
 require 'stripe_mock/request_handlers/charges.rb'
 require 'stripe_mock/request_handlers/customers.rb'
+require 'stripe_mock/request_handlers/invoices.rb'
 require 'stripe_mock/request_handlers/invoice_items.rb'
 require 'stripe_mock/request_handlers/plans.rb'
+require 'stripe_mock/request_handlers/coupons.rb'
 require 'stripe_mock/instance'
 
 module StripeMock
